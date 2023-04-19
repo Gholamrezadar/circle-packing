@@ -101,7 +101,7 @@ std::pair<float, float> propose_position(const std::vector<Circle>& circles) {
 }
 
 int main() {
-    const int ITERATIONS = 3000;
+    const int ITERATIONS = 10000;
     const int CIRCLES_PER_ITERATION = 20;
     const int GROWTH_ITERATIONS = 200;
 
