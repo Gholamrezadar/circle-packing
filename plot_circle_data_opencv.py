@@ -13,12 +13,16 @@ def plot(circles):
         cv2.circle(image, (x, y), r, (0, 0, 0), int(W*0.0015), cv2.LINE_AA)
     
     # Current timestamp
-    timestamp = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+    timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
     cv2.imwrite(f"images/cv_result_{timestamp}.png", image)
 
+import sys
 def main():
     circles = []
-    with open('result.txt', 'r') as f:
+    result_file = "result.txt"
+    if len(sys.argv)>1:
+        result_file = sys.argv[1]
+    with open(result_file, 'r') as f:
         for line in f:
             x, y, r = line.split(", ")
             circles.append((float(x), float(y), float(r)))
