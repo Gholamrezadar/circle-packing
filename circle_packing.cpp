@@ -101,13 +101,18 @@ std::pair<float, float> propose_position(const std::vector<Circle>& circles) {
 }
 
 int main() {
-    const int ITERATIONS = 2000;
-    const int CIRCLES_PER_ITERATION = 7;
-    const int GROWTH_ITERATIONS = 300;
+    const int ITERATIONS = 3000;
+    const int CIRCLES_PER_ITERATION = 20;
+    const int GROWTH_ITERATIONS = 200;
 
     std::vector<Circle> circles;
 
     for (int iteration = 0; iteration < ITERATIONS; iteration++) {
+        // progessbar
+        if (iteration % 500 == 0) {
+            std::clog << iteration << "/" << ITERATIONS <<" "<<circles.size()<<" circles"<<"\n";
+        }
+
         for (int i = 0; i < CIRCLES_PER_ITERATION; i++) {
             auto [x, y] = propose_position(circles);
             Circle c(x, y);
@@ -118,10 +123,10 @@ int main() {
             for (Circle& c : circles) {
                 if (!c.frozen) {
                     if (c.is_valid(circles)) {
-                        c.grow(0.002);
+                        c.grow(0.005);
                     }
                     else {
-                        c.shrink(0.002);
+                        c.shrink(0.005);
                         c.frozen = true;
                     }
                 }
@@ -131,8 +136,10 @@ int main() {
 
     // Print the positions and radii of the circles
     for (const Circle& c : circles) {
-        std::cout << c.x << ", " << c.y << ", " << c.r << "\n";
-        // std::cout << c.x << ", " << c.y << ", " << c.r << std::endl;
+        if (c.r>0.000000001)
+        {
+            std::cout << c.x << ", " << c.y << ", " << c.r << "\n";
+        }
     }
 
     return 0;

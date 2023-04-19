@@ -12,4 +12,8 @@ echo -e "Done!\n"
 
 # Plot the result
 echo "Plotting..."
-time python3.11 plot_circle_data.py
+time python3.11 plot_circle_data_opencv.py
+
+# Remove this line if you dont have eog
+# Displays the latest image
+eog images/"$(ls -t images | head -n 1)"   

@@ -66,8 +66,7 @@ def plot(circles):
             continue
 
         # only border of circle and change line width based on radius
-        import math
-        ax.add_patch(CirclePatch((c.x, c.y), c.r, fill=False, color='black', linewidth=max(c.r*12, 0.2)))
+        ax.add_patch(CirclePatch((c.x, c.y), c.r, fill=False, color='black',))# linewidth=max(c.r*12, 0.2)))
         counter += 1
     
     print("Number of plotted circles:", counter)
