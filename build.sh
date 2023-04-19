@@ -1,10 +1,15 @@
 #!/bin/bash
 
 # Compile the program
+echo "Compiling the program..."
 g++ -Wall -O3 -std=c++17 circle_packing.cpp -o circle_packing
+echo -e "Done!\n"
 
 # Run the program
-./circle_packing > result.txt
+echo "Running the program..."
+time ./circle_packing > result.txt
+echo -e "Done!\n"
 
 # Plot the result
-python3.11 load_cpp_data.py
+echo "Plotting..."
+time python3.11 plot_circle_data.py

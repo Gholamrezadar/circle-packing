@@ -13,7 +13,7 @@ public:
     {
         x = x_;
         y = y_;
-        r = 0;
+        r = 0.0;
         frozen = false;
     }
 
@@ -50,6 +50,11 @@ private:
         {
             if (&circle != this)
             {
+                if (circle.r < 0.00000001)
+                {
+                    continue;
+                }
+
                 float dx = x - circle.x;
                 float dy = y - circle.y;
                 // float dist = sqrt(dx * dx + dy * dy);
@@ -96,23 +101,27 @@ std::pair<float, float> propose_position(const std::vector<Circle>& circles) {
 }
 
 int main() {
+    const int ITERATIONS = 2000;
+    const int CIRCLES_PER_ITERATION = 7;
+    const int GROWTH_ITERATIONS = 300;
+
     std::vector<Circle> circles;
 
-    for (int iteration = 0; iteration < 100; iteration++) {
-        for (int i = 0; i < 15; i++) {
+    for (int iteration = 0; iteration < ITERATIONS; iteration++) {
+        for (int i = 0; i < CIRCLES_PER_ITERATION; i++) {
             auto [x, y] = propose_position(circles);
             Circle c(x, y);
             circles.push_back(c);
         }
 
-        for (int i = 0; i < 200; i++) {
+        for (int i = 0; i < GROWTH_ITERATIONS; i++) {
             for (Circle& c : circles) {
                 if (!c.frozen) {
                     if (c.is_valid(circles)) {
-                        c.grow(0.005);
+                        c.grow(0.002);
                     }
                     else {
-                        c.shrink(0.005);
+                        c.shrink(0.002);
                         c.frozen = true;
                     }
                 }

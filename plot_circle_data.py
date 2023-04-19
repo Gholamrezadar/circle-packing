@@ -47,10 +47,11 @@ class Circle():
 #############################################################################
 # Plotting #
 def plot(circles):
-    fig, ax = plt.subplots(dpi=50)
+
+    fig, ax = plt.subplots(dpi=300, figsize=(5, 5), constrained_layout=True)
 
     # make sure the plot is square
-    ax.axis('square')
+    ax.set_aspect('equal')
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.set_xticks([])
@@ -58,9 +59,18 @@ def plot(circles):
     ax.axis('off')
 
     # Circles
+    counter = 0
     for c in circles:
-        # only border of circle
-        ax.add_patch(CirclePatch((c.x, c.y), c.r, fill=False, color='k'))
+        # skip small circles
+        if c.r <= 0.000000001:
+            continue
+
+        # only border of circle and change line width based on radius
+        import math
+        ax.add_patch(CirclePatch((c.x, c.y), c.r, fill=False, color='black', linewidth=max(c.r*12, 0.2)))
+        counter += 1
+    
+    print("Number of plotted circles:", counter)
     
     # Current timestamp
     import datetime
@@ -78,7 +88,9 @@ def main():
             c = Circle(float(x), float(y))
             c.r = float(r)
             circles.append(c)
-    
+
+    print("Number of circles:", len(circles))
+
     plot(circles)
 
 if __name__ == '__main__':
