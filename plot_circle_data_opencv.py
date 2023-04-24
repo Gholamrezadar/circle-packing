@@ -1,6 +1,7 @@
 import cv2
 import numpy as np
 import datetime
+import sys
 
 def plot(circles):
     W, H = 4096, 4096
@@ -10,13 +11,13 @@ def plot(circles):
         x = int(circle[0]*W)
         y = int(circle[1]*H)
         r = int(circle[2]*W)
-        cv2.circle(image, (x, y), r, (0, 0, 0), int(W*0.0015), cv2.LINE_AA)
+        line_weight = int(W*0.0015) if len(sys.argv)<3 else int(sys.argv[2])
+        cv2.circle(image, (x, y), r, (0, 0, 0), line_weight, cv2.LINE_AA)
     
     # Current timestamp
     timestamp = datetime.datetime.now().strftime('%Y-%m-%d_%H:%M:%S')
     cv2.imwrite(f"images/cv_result_{timestamp}.png", image)
 
-import sys
 def main():
     circles = []
     result_file = "result.txt"
